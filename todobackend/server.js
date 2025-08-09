@@ -7,9 +7,9 @@ const mongoose = require('mongoose');
 const app = express();
 
 //define a route
-app.get('/',(req,res)=> { 
-    res.send("hello worlddddd")
-});
+// app.get('/',(req,res)=> { 
+//     res.send("hello worlddddd")
+// });
 
 //middleware
 app.use((req,res,next) =>
