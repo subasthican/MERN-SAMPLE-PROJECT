@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 //create an instance of express
 const app = express();
 
+//import routes
+const taskRoutes = require('./routes/taskRoute');
+
 //define a route
 // app.get('/',(req,res)=> { 
 //     res.send("hello worlddddd")
@@ -18,6 +21,9 @@ app.use((req,res,next) =>
     next();
 })
 
+//middleware to parse json
+app.use(express.json());
+
 //db connection
 mongoose.connect(process.env.MANGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -27,4 +33,6 @@ mongoose.connect(process.env.MANGO_URL, { useNewUrlParser: true, useUnifiedTopol
     }).catch((error) => console.log( error));
 //start the server
 const port = 3000;
+
+app.use('/api/tasks', taskRoutes);
 
