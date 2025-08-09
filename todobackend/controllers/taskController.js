@@ -38,5 +38,38 @@ const getTasks = async(req, res) => {
     }
 };
 
+//update task
+const updateTask = async (req, res) => {
+    const { id } = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({error: 'No such task'});
+    }
+    try {
+        const updatedTask = await taskModel.findByIdAndUpdate(id, req.body, { new: true });
+        if (!updatedTask) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+        res.status(200).json(updatedTask);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 
-module.exports = { createTask, getTasks ,getTaskById};
+//delete task
+const deleteTask = async (req, res) => {
+    const { id } = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({error: 'No such task'});
+    }
+    try {
+        const deletedTask = await taskModel.findByIdAndDelete(id);
+        if (!deletedTask) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+        res.status(200).json(deletedTask);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+module.exports = { createTask, getTasks ,getTaskById,updateTask,deleteTask};
