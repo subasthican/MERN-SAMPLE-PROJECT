@@ -9,6 +9,7 @@ const app = express();
 //import routes
 const taskRoutes = require('./routes/taskRoute');
 
+const cors = require('cors');
 //define a route
 // app.get('/',(req,res)=> { 
 //     res.send("hello worlddddd")
@@ -23,6 +24,8 @@ app.use((req,res,next) =>
 
 //middleware to parse json
 app.use(express.json());
+
+app.use(cors());
 
 //db connection
 mongoose.connect(process.env.MANGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
